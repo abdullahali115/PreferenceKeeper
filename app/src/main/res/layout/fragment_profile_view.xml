@@ -28,6 +28,7 @@
                 android:background="@drawable/ic_profile"
                 android:padding="8dp"/>
             <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -72,10 +73,11 @@
                     android:layout_marginBottom="6dp"
                     />
                 <TextView
+                    android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="john@doe.com"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 
@@ -116,10 +118,11 @@
                     android:layout_marginBottom="6dp"
                     />
                 <TextView
+                    android:id="@+id/password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="doe_john"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 
@@ -161,10 +164,11 @@
                     android:layout_marginBottom="6dp"
                     />
                 <TextView
+                    android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+923000000000"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 
@@ -207,10 +211,11 @@
                     android:layout_marginBottom="6dp"
                     />
                 <TextView
+                    android:id="@+id/gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Male"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 
@@ -251,10 +256,11 @@
                     android:layout_marginBottom="6dp"
                     />
                 <TextView
+                    android:id="@+id/notifs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Disabled"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 
@@ -297,10 +303,11 @@
                     android:layout_marginBottom="6dp"
                     />
                 <TextView
+                    android:id="@+id/theme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Light"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
 

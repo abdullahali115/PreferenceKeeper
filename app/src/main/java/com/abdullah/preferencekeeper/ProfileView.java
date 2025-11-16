@@ -1,13 +1,16 @@
 package com.abdullah.preferencekeeper;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class ProfileView extends Fragment {
 
@@ -42,7 +45,38 @@ public class ProfileView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_view, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_profile_view, container, false);
+
+        name = view.findViewById(R.id.name);
+        email = view.findViewById(R.id.email);
+        password = view.findViewById(R.id.password);
+        phone = view.findViewById(R.id.phone);
+        gender = view.findViewById(R.id.gender);
+        notif = view.findViewById(R.id.notifs);
+        theme = view.findViewById(R.id.theme);
+        displayPrefs();
+
+        return view;
     }
+
+    private void displayPrefs()
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        String n = prefs.getString("username", "John Doe");
+        String e = prefs.getString("email", "john@doe.com");
+        String p = prefs.getString("password", "doe_john");
+        String ph = prefs.getString("phone", "+923000000000");
+        String g = prefs.getString("gender", "Male");
+        String ntfs = prefs.getString("notifs", "Disabled");
+        String th = prefs.getString("theme", "Light");
+        name.setText(n);
+        email.setText(e);
+        password.setText(p);
+        phone.setText(ph);
+        gender.setText(g);
+        notif.setText(ntfs);
+        theme.setText(th);
+    }
+
 }

@@ -1,42 +1,38 @@
 package com.abdullah.preferencekeeper;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserSettings#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class UserSettings extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    ThemeChanger changer;
+    EditText nameSetter, emailSetter, passwordSetter, phoneSetter;
+    Button saveBtn, resetBtn;
+    RadioGroup genderSetter, notifSetter, themeSetter;
+    RadioButton genderBtn, notifBtn, themeBtn;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public UserSettings() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserSettings.
-     */
-    // TODO: Rename and change types and number of parameters
     public static UserSettings newInstance(String param1, String param2) {
         UserSettings fragment = new UserSettings();
         Bundle args = new Bundle();
@@ -58,7 +54,107 @@ public class UserSettings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_settings, container, false);
+
+        nameSetter = view.findViewById(R.id.setName);
+        emailSetter = view.findViewById(R.id.setEmail);
+        passwordSetter = view.findViewById(R.id.setPassword);
+        phoneSetter = view.findViewById(R.id.setPhone);
+        genderSetter = view.findViewById(R.id.setGender);
+        notifSetter = view.findViewById(R.id.setNotifs);
+        themeSetter = view.findViewById(R.id.themeSetter);
+        saveBtn = view.findViewById(R.id.saveBtn);
+        resetBtn = view.findViewById(R.id.resetBtn);
+        changer = new ThemeChanger();
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameSetter.getText().toString();
+                String email = emailSetter.getText().toString();
+                String password = passwordSetter.getText().toString();
+                String phone = phoneSetter.getText().toString();
+                int genderID = genderSetter.getCheckedRadioButtonId();
+                int notifsID = notifSetter.getCheckedRadioButtonId();
+                int themeID = themeSetter.getCheckedRadioButtonId();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+                SharedPreferences.Editor editor = prefs.edit();
+
+                String val = validator(name, email, password, phone);
+                if(!val.isEmpty())
+                {
+                    Toast.makeText(requireContext(), val, Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    if(!name.isEmpty())
+                        editor.putString("username", name);
+                    if(!email.isEmpty())
+                        editor.putString("email", email);
+                    if(!password.isEmpty())
+                        editor.putString("password", password);
+                    if(!phone.isEmpty())
+                        editor.putString("phone", phone);
+                    if(genderID != -1)
+                    {
+                        genderBtn = view.findViewById(genderID);
+                        editor.putString("gender", genderBtn.getText().toString());
+                    }
+                    if(notifsID != -1)
+                    {
+                        notifBtn = view.findViewById(notifsID);
+                        String temp = notifBtn.getText().toString();
+                        if(temp.equals("On"))
+                            temp = "Enabled";
+                        else if(temp.equals("Off"))
+                            temp = "Disabled";
+                        editor.putString("notifs", temp);
+                    }
+                    if(themeID != -1)
+                    {
+                        themeBtn = view.findViewById(themeID);
+                        String th = themeBtn.getText().toString();
+                        editor.putString("theme", th);
+                        changer.changeTheme(th);
+                    }
+                    editor.apply();
+                    Toast.makeText(requireContext(), "Data Saved!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        resetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+                editor.apply();
+                changer.changeTheme("Light");
+                Toast.makeText(requireContext(), "Preferences Reset!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return view;
     }
+    public String validator(String name, String email, String password, String phone)
+    {
+        if(!name.isEmpty() && !name.matches("[a-zA-z ]+"))
+        {
+            return "Invalid Name!";
+        }
+        if(!email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            return "Invalid Email!";
+        }
+        if(!password.isEmpty() && password.length() < 8)
+        {
+            return "Password can't be less than 8 characters";
+        }
+        if(!phone.isEmpty() && !phone.matches("\\+?\\d{10,15}"))
+        {
+            return "Invalid Phone Number!";
+        }
+        return "";
+    }
+
 }

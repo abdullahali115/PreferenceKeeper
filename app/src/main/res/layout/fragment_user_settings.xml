@@ -51,6 +51,7 @@
                 />
 
             <EditText
+                android:id="@+id/setName"
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:background="@drawable/inp_border"
@@ -81,11 +82,13 @@
                 />
 
             <EditText
+                android:id="@+id/setEmail"
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:background="@drawable/inp_border"
                 android:hint="Email"
                 android:paddingStart="20dp"
+                android:inputType="textEmailAddress"
                 />
 
 
@@ -112,6 +115,7 @@
                 />
 
             <EditText
+                android:id="@+id/setPassword"
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:background="@drawable/inp_border"
@@ -144,6 +148,7 @@
                 />
 
             <EditText
+                android:id="@+id/setPhone"
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:background="@drawable/inp_border"
@@ -175,6 +180,7 @@
                 />
 
             <RadioGroup
+                android:id="@+id/setGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -219,6 +225,7 @@
                 />
 
             <RadioGroup
+                android:id="@+id/setNotifs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -264,6 +271,7 @@
                 />
 
             <RadioGroup
+                android:id="@+id/themeSetter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -296,6 +304,7 @@
             >
 
             <Button
+                android:id="@+id/saveBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save"
@@ -310,6 +319,7 @@
                 />
 
             <Button
+                android:id="@+id/resetBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reset"

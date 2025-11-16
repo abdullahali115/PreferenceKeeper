@@ -1,11 +1,14 @@
 package com.abdullah.preferencekeeper;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -22,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
     Fragment frag;
     FragmentManager manager;
     FragmentTransaction transactor;
+    ThemeChanger changer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String th = prefs.getString("theme", "Light");
+        changer = new ThemeChanger();
+        changer.changeTheme(th);
         setContentView(R.layout.activity_main);
 
         frag = new ProfileView();
@@ -44,11 +52,9 @@ public class MainActivity extends AppCompatActivity {
                 {
                     case 0:
                         selectedFrag = new ProfileView();
-                        Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         selectedFrag = new UserSettings();
-                        Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 if(selectedFrag != null)
@@ -71,7 +77,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 }
