@@ -25,15 +25,10 @@ public class MainActivity extends AppCompatActivity {
     Fragment frag;
     FragmentManager manager;
     FragmentTransaction transactor;
-    ThemeChanger changer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        String th = prefs.getString("theme", "Light");
-        changer = new ThemeChanger();
-        changer.changeTheme(th);
         setContentView(R.layout.activity_main);
 
         frag = new ProfileView();

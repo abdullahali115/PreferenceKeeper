@@ -3,6 +3,8 @@ package com.abdullah.preferencekeeper;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
@@ -10,10 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatDelegate;
 
 public class ProfileView extends Fragment {
 
+    ThemeChanger changer;
     TextView name, email, password, phone, gender, notif, theme;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -46,7 +48,12 @@ public class ProfileView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_profile_view, container, false);
+        return inflater.inflate(R.layout.fragment_profile_view, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
@@ -55,9 +62,8 @@ public class ProfileView extends Fragment {
         gender = view.findViewById(R.id.gender);
         notif = view.findViewById(R.id.notifs);
         theme = view.findViewById(R.id.theme);
+        changer = new ThemeChanger();
         displayPrefs();
-
-        return view;
     }
 
     private void displayPrefs()
@@ -70,6 +76,7 @@ public class ProfileView extends Fragment {
         String g = prefs.getString("gender", "Male");
         String ntfs = prefs.getString("notifs", "Disabled");
         String th = prefs.getString("theme", "Light");
+        changer.changeTheme(th);
         name.setText(n);
         email.setText(e);
         password.setText(p);
