@@ -69,10 +69,10 @@ public class ProfileView extends Fragment {
     private void displayPrefs()
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        String n = prefs.getString("username", "John Doe");
-        String e = prefs.getString("email", "john@doe.com");
-        String p = prefs.getString("password", "doe_john");
-        String ph = prefs.getString("phone", "+923000000000");
+        String n = prefs.getString("username", "");
+        String e = prefs.getString("email", "Not Set");
+        String p = prefs.getString("password", "Not Set");
+        String ph = prefs.getString("phone", "Not Set");
         String g = prefs.getString("gender", "Not Set");
         String ntfs = prefs.getString("notifs", "Disabled");
         String th = prefs.getString("theme", "Light");
