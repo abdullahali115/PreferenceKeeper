@@ -148,7 +148,7 @@ public class UserSettings extends Fragment {
                 loadPreviousPrefs();
                 resetGender(genderSetter);
                 Toast.makeText(requireContext(), "Preferences Reset!", Toast.LENGTH_SHORT).show();
-                return false;
+                return true;
             }
         });
     }
@@ -167,7 +167,7 @@ public class UserSettings extends Fragment {
         {
             return "Password can't be less than 8 characters";
         }
-        if(!phone.isEmpty() && !phone.matches("\\+?\\d{10,15}"))
+        if(!phone.isEmpty() && !phone.matches("\\+?\\d{10,12}"))
         {
             return "Invalid Phone Number!";
         }
