@@ -134,6 +134,12 @@ public class UserSettings extends Fragment {
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(requireContext(), "Hold to Reset!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        resetBtn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
@@ -142,6 +148,7 @@ public class UserSettings extends Fragment {
                 loadPreviousPrefs();
                 resetGender(genderSetter);
                 Toast.makeText(requireContext(), "Preferences Reset!", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
     }
