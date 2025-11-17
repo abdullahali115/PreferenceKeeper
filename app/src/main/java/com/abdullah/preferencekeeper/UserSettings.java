@@ -3,6 +3,8 @@ package com.abdullah.preferencekeeper;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
@@ -54,7 +56,12 @@ public class UserSettings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_settings, container, false);
+        return inflater.inflate(R.layout.fragment_user_settings, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         nameSetter = view.findViewById(R.id.setName);
         emailSetter = view.findViewById(R.id.setEmail);
@@ -66,6 +73,7 @@ public class UserSettings extends Fragment {
         saveBtn = view.findViewById(R.id.saveBtn);
         resetBtn = view.findViewById(R.id.resetBtn);
         changer = new ThemeChanger();
+        loadPreviousPrefs();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,11 +139,13 @@ public class UserSettings extends Fragment {
                 editor.clear();
                 editor.apply();
                 changer.changeTheme("Light");
+                loadPreviousPrefs();
+                resetGender(genderSetter);
                 Toast.makeText(requireContext(), "Preferences Reset!", Toast.LENGTH_SHORT).show();
             }
         });
-        return view;
     }
+
     public String validator(String name, String email, String password, String phone)
     {
         if(!name.isEmpty() && !name.matches("[a-zA-z ]+"))
@@ -156,5 +166,40 @@ public class UserSettings extends Fragment {
         }
         return "";
     }
+    private void loadPreviousPrefs()
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        String gen = prefs.getString("gender", "");
+        String notif = prefs.getString("notifs", "Disabled");
+        String theme = prefs.getString("theme", "Light");
+        if(!gen.isEmpty())
+            radioHelper(genderSetter, gen);
+        radioHelper(notifSetter, notif);
+        radioHelper(themeSetter, theme);
+    }
+    private void radioHelper(RadioGroup rg, String val)
+    {
+        if(!val.isEmpty())
+        {
+            for (int i = 0; i < rg.getChildCount(); i++) {
+                RadioButton rb = (RadioButton) rg.getChildAt(i);
+                if(rb.getText().toString().equals(val))
+                    rg.check(rb.getId());
+                else if(rb.getText().toString().equals("On") && val.equals("Enabled"))
+                    rg.check(rb.getId());
+                else if(rb.getText().toString().equals("Off") && val.equals("Disabled"))
+                    rg.check(rb.getId());
+            }
+        }
+    }
+    private void resetGender(RadioGroup gen)
+    {
+        for(int i=0;i<gen.getChildCount();i++)
+        {
+            RadioButton btn = (RadioButton) gen.getChildAt(i);
+            btn.setChecked(false);
+        }
+    }
+
 
 }

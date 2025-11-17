@@ -153,6 +153,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/inp_border"
                 android:hint="Phone No."
+                android:inputType="phone"
                 android:paddingStart="20dp"
                 />
 

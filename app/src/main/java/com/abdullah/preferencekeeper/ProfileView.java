@@ -73,7 +73,7 @@ public class ProfileView extends Fragment {
         String e = prefs.getString("email", "john@doe.com");
         String p = prefs.getString("password", "doe_john");
         String ph = prefs.getString("phone", "+923000000000");
-        String g = prefs.getString("gender", "Male");
+        String g = prefs.getString("gender", "Not Set");
         String ntfs = prefs.getString("notifs", "Disabled");
         String th = prefs.getString("theme", "Light");
         changer.changeTheme(th);
